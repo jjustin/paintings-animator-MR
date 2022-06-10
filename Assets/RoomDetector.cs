@@ -36,11 +36,8 @@ public class RoomDetector : MonoBehaviour
     {
         renderCam = Camera.main;
         Resolution cameraResolution = PhotoCapture.SupportedResolutions.OrderByDescending((res) => res.width * res.height).First();
-#if UNITY_EDITOR
-        cameraResolution.width = 1280;
-        cameraResolution.height = 720;
-        // cameraResolution = PhotoCapture.SupportedResolutions.OrderByDescending((res) => res.width * res.height).First();
-#else
+#if !UNITY_EDITOR
+        // We dont want to use 4k camera on hololens in procution build
         cameraResolution.width = 1920;
         cameraResolution.height = 1080;
 #endif
@@ -214,7 +211,7 @@ public class RoomDetector : MonoBehaviour
                     Debug.LogWarningFormat("Image {0} detected, but ray did not hit - skipping", name);
                     shouldRender = false;
                     // Don't include image if spatial map is not yet available
-                    //break;
+                    break;
                 }
 
                 points[i] = hit.point;
@@ -222,11 +219,11 @@ public class RoomDetector : MonoBehaviour
 
             if (shouldRender)
             {
-                foreach (var point in points)
+/*                foreach (var point in points)
                 {
                     DrawLine(cam_pos, point, Color.red, 5);
                 }
-                LoadPainting(name, points);
+*/              LoadPainting(name, points);
             }
         }
 
