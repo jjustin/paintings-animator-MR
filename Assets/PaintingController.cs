@@ -27,6 +27,7 @@ public class PaintingController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        loadTexture();
     }
 
     void loadTexture()
@@ -45,7 +46,7 @@ public class PaintingController : MonoBehaviour
 
 
         // TODO: Update split to include all but last if names will contain more than one dot
-        var url = string.Format("{0}/output/{1}_{2}.mp4", GlobalVars.API_URL, paintingName.Split('.')[0], emotion);
+        var url = string.Format("{0}/output/{1}/{2}", GlobalVars.API_URL, paintingName, emotion);
         
         videoPlayer = gameObject.AddComponent<UnityEngine.Video.VideoPlayer>();
         videoPlayer.url = url;
